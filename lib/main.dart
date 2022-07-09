@@ -1,15 +1,44 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import './question.dart';
+import './answer.dart';
 
 void main() => runApp(FirstApp());
 
-var myList = [
-    'hello world!',
-    'GoodBye world!',
+class FirstApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _FirstAppState();
+  }
+}
+
+class _FirstAppState extends State<FirstApp> {
+  var _questionList = [
+    {
+      'questionText': 'What\'s your favorite color?',
+      'answers': ['Black', 'Red', 'Green', 'White'],
+    },
+    {
+      'questionText': 'What\'s your favorite animal?',
+      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+    },
+    {
+      'questionText': 'What\'s your favorite instructor?',
+      'answers': ['Max', 'Max', 'Max', 'Max'],
+    },
   ];
 
-var listIndex = 0;
+  var _listIndex = 0;
 
-class FirstApp extends StatelessWidget {
+  void _answerFunction() {
+    setState(() {
+      if (++_listIndex >= _questionList.length) {
+        _listIndex = 0;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,46 +46,19 @@ class FirstApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: BodyText(),
-      ),
-    );
-  }
-}
-
-class BodyText extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return BodyTextState();
-  }
-}
-
-class BodyTextState extends State<BodyText> {
-  
-  void myFunctionForOnPress() {
-    setState(() {
-      listIndex = listIndex + 1;
-      if (listIndex >= myList.length) {
-        listIndex = 0;
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          myList[listIndex],
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
+        body: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              child: Question(_questionList[_listIndex]['questionText']),
+            ),
+            ...(_questionList[_listIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_answerFunction, answer);
+            }).toList(),
+          ],
         ),
-        ElevatedButton(
-          onPressed: myFunctionForOnPress,
-          child: Text('Press me!'),
-        )
-      ],
+      ),
     );
   }
 }

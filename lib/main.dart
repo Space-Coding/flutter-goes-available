@@ -2,21 +2,36 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(FirstApp());
 
-class FirstApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return FirstAppState();
-  }
-}
-
-class FirstAppState extends State<FirstApp> {
-  var myList = [
+var myList = [
     'hello world!',
     'GoodBye world!',
   ];
 
-  var listIndex = 0;
+var listIndex = 0;
 
+class FirstApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('My First App'),
+        ),
+        body: BodyText(),
+      ),
+    );
+  }
+}
+
+class BodyText extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return BodyTextState();
+  }
+}
+
+class BodyTextState extends State<BodyText> {
+  
   void myFunctionForOnPress() {
     setState(() {
       listIndex = listIndex + 1;
@@ -28,21 +43,20 @@ class FirstAppState extends State<FirstApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('My First App'),
+    return Column(
+      children: [
+        Text(
+          myList[listIndex],
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        body: Column(
-          children: [
-            Text(myList[listIndex]),
-            ElevatedButton(
-              onPressed: myFunctionForOnPress,
-              child: Text('Press me!'),
-            )
-          ],
-        ),
-      ),
+        ElevatedButton(
+          onPressed: myFunctionForOnPress,
+          child: Text('Press me!'),
+        )
+      ],
     );
   }
 }

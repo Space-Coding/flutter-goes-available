@@ -2,10 +2,28 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(FirstApp());
 
-class FirstApp extends StatelessWidget {
+class FirstApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return FirstAppState();
+  }
+}
 
-  void myFunctionForOnPress(){
-    print("Button Pressed");
+class FirstAppState extends State<FirstApp> {
+  var myList = [
+    'hello world!',
+    'GoodBye world!',
+  ];
+
+  var listIndex = 0;
+
+  void myFunctionForOnPress() {
+    setState(() {
+      listIndex = listIndex + 1;
+      if (listIndex >= myList.length) {
+        listIndex = 0;
+      }
+    });
   }
 
   @override
@@ -17,7 +35,7 @@ class FirstApp extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text('Hello World'),
+            Text(myList[listIndex]),
             ElevatedButton(
               onPressed: myFunctionForOnPress,
               child: Text('Press me!'),

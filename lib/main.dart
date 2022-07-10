@@ -14,7 +14,7 @@ class FirstApp extends StatefulWidget {
 }
 
 class _FirstAppState extends State<FirstApp> {
-  var _questionList = [
+  static const _questionList = [
     {
       'questionText': 'What\'s your favorite color?',
       'answers': ['Black', 'Red', 'Green', 'White'],
@@ -50,7 +50,7 @@ class _FirstAppState extends State<FirstApp> {
           children: [
             Container(
               width: double.infinity,
-              child: Question(_questionList[_listIndex]['questionText']),
+              child: Question(_questionList[_listIndex]['questionText'] as String),
             ),
             ...(_questionList[_listIndex]['answers'] as List<String>)
                 .map((answer) {

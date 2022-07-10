@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(FirstApp());
 
@@ -14,28 +12,13 @@ class FirstApp extends StatefulWidget {
 }
 
 class _FirstAppState extends State<FirstApp> {
-  static const _questionList = [
-    {
-      'questionText': 'What\'s your favorite color?',
-      'answers': ['Black', 'Red', 'Green', 'White'],
-    },
-    {
-      'questionText': 'What\'s your favorite animal?',
-      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
-    },
-    {
-      'questionText': 'What\'s your favorite instructor?',
-      'answers': ['Max', 'Max', 'Max', 'Max'],
-    },
-  ];
+  var _resultScore;
+  var _isQuizFinished = false;
 
-  var _listIndex = 0;
-
-  void _answerFunction() {
+  void _finishQuiz(int score) {
     setState(() {
-      if (++_listIndex >= _questionList.length) {
-        _listIndex = 0;
-      }
+      _resultScore = score;
+      _isQuizFinished = true;
     });
   }
 
@@ -44,18 +27,13 @@ class _FirstAppState extends State<FirstApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('My First App'),
+          title: Text('Mantiqiy savollar'),
         ),
         body: Column(
           children: [
-            Container(
-              width: double.infinity,
-              child: Question(_questionList[_listIndex]['questionText'] as String),
-            ),
-            ...(_questionList[_listIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Answer(_answerFunction, answer);
-            }).toList(),
+            _isQuizFinished ? Result(_resultScore) : Quiz(_finishQuiz),
+            SizedBox(height: 200),
+            Text('FirstApp by Shohijahon Ikromov 10.07.2020'),
           ],
         ),
       ),

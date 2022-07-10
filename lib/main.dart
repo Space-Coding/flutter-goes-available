@@ -22,6 +22,12 @@ class _FirstAppState extends State<FirstApp> {
     });
   }
 
+  void _resetQuiz(){
+    setState(() {
+      _isQuizFinished = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,7 +37,7 @@ class _FirstAppState extends State<FirstApp> {
         ),
         body: Column(
           children: [
-            _isQuizFinished ? Result(_resultScore) : Quiz(_finishQuiz),
+            _isQuizFinished ? Result(_resultScore, _resetQuiz) : Quiz(_finishQuiz),
             SizedBox(height: 200),
             Text('FirstApp by Shohijahon Ikromov 10.07.2020'),
           ],
